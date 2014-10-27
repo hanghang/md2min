@@ -66,7 +66,9 @@ body {
 .markdown-body {
 		font: 13px Helvetica, arial, freesans, clean, sans-serif;
 		display: block;
-		width: 800px;
+		margin: 20px;
+		background-color: #F9F9F5;
+    		color: #2C3E50;
     {{.ContentStyle}}
     font-size: 14px;
     line-height: 1.6;
