@@ -7,8 +7,8 @@ var templContent = `<!doctype html>
 		<meta http-equiv="X-UA-Compatible" content="chrome=1">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 		<title></title>
-<link rel="stylesheet" href="/css/style.css" type="text/css"/> 
-<script type="text/javascript" src='/js/highlight.pack.js'></script>
+<link rel="stylesheet" href="./css/style.css" type="text/css"/> 
+<script type="text/javascript" src='./js/highlight.pack.js'></script>
 <script>hljs.initHighlightingOnLoad();</script>
 	</head>
 	<body>
