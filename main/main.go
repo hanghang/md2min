@@ -1,16 +1,17 @@
 package main
 
 import (
-	"os"
-	"fmt"
 	"flag"
-	"strings"
+	"fmt"
+	"github.com/hanghang/md2min"
 	"io/ioutil"
-	"github.com/fairlyblank/md2min"
+	"os"
+	"strings"
 )
 
 var mode string
 var modeList []string
+var output string
 
 func pFail() {
 	if err := recover(); err != nil {
@@ -26,6 +27,7 @@ func usage() {
 func init() {
 	modeList = []string{"none", "h1", "h2", "h3", "h4", "h5", "h6"}
 	flag.StringVar(&mode, "nav", "none", `navigate level ["none", "h1", "h2", "h3", "h4", "h5", "h6"]`)
+	flag.StringVar(&output, "output", "file", `output ["file", "stdout"]`)
 }
 
 func main() {
@@ -34,12 +36,12 @@ func main() {
 	flag.Parse()
 
 	i := 0
-	for ; i<len(modeList); i++ {
+	for ; i < len(modeList); i++ {
 		if modeList[i] == mode {
 			break
 		}
 	}
-	
+
 	if flag.NArg() < 1 || i >= len(modeList) {
 		usage()
 		return
@@ -58,15 +60,18 @@ func main() {
 	}
 
 	md := md2min.New(mode)
-	
-	newname := strings.TrimRight(name, ".md") + ".html"
-	outfile, err := os.Create(newname)
-	if err != nil {
-		panic(err)
-	}
-	defer outfile.Close()
 
-	err = md.Parse(input, outfile)
+	if output == "stdout" {
+		err = md.Parse(input, os.Stdout)
+	} else {
+		newname := strings.TrimRight(name, ".md") + ".html"
+		outfile, err := os.Create(newname)
+		if err != nil {
+			panic(err)
+		}
+		defer outfile.Close()
+		err = md.Parse(input, outfile)
+	}
 	if err != nil {
 		panic(err)
 	}
